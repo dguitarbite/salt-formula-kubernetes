@@ -281,8 +281,5 @@ kubernetes_namespace_create_{{ name }}:
   cmd.run:
     - name: kubectl create ns "{{ name }}"
     - name: kubectl get ns -o=custom-columns=NAME:.metadata.name | grep -v NAME | grep "{{ name }}" > /dev/null || kubectl create ns "{{ name }}"
-    {%- if grains.get('noservices') %}
-    - onlyif: /bin/false
-    {%- endif %}
 
 {%- endfor %}
