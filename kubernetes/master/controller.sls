@@ -273,9 +273,6 @@ master_services:
     - file: /etc/default/kube-controller-manager
     - file: /usr/bin/hyperkube
 
-{%- endif %}
-
-
 {%- for name,namespace in master.namespace.items() %}
 
 {%- if namespace.enabled %}
