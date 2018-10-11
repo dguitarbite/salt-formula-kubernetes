@@ -154,39 +154,6 @@ addon-dir-create:
 
 {% endif %}
 
-{%- if common.monitoring.get('backend', "") == 'prometheus' %}
-
-{%- if 'RBAC' in master.auth.get('mode', "") %}
-
-/etc/kubernetes/addons/prometheus/prometheus-roles.yml:
-  file.managed:
-    - source: salt://kubernetes/files/kube-addons/prometheus/prometheus-roles.yml
-    - template: jinja
-    - group: root
-    - dir_mode: 755
-    - makedirs: True
-
-{%- endif %}
-
-{%- endif %}
-
-{%- if common.addons.get('prometheus', {'enabled': False}).enabled %}
-
-{%- set prometheus_resources = ['ns', 'sa', 'server-deploy','server-svc'] %}
-{%- for resource in prometheus_resources %}
-
-/etc/kubernetes/addons/prometheus/prometheus-{{ resource }}.yaml:
-  file.managed:
-    - source: salt://kubernetes/files/kube-addons/prometheus/prometheus-{{ resource }}.yaml
-    - template: jinja
-    - group: root
-    - dir_mode: 755
-    - makedirs: True
-
-{%- endfor %}
-
-{%- endif %}
-
 {%- if common.addons.get('alertmanager', {'enabled': False}).enabled %}
 
 {%- set am_resources = ['deploy', 'ns', 'sa', 'svc'] %}
