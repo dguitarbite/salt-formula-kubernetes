@@ -299,5 +299,3 @@ kubernetes_namespace_delete_{{ name }}:
 {%- endif %}
 
 {%- endfor %}
-
-{%- endif %}
