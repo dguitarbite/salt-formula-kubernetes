@@ -283,3 +283,5 @@ kubernetes_namespace_create_{{ name }}:
     - name: kubectl get ns -o=custom-columns=NAME:.metadata.name | grep -v NAME | grep "{{ name }}" > /dev/null || kubectl create ns "{{ name }}"
 
 {%- endfor %}
+
+{% endif %}
