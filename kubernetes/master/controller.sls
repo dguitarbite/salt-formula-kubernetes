@@ -275,8 +275,6 @@ master_services:
 
 {%- for name,namespace in master.namespace.items() %}
 
-{%- if namespace.enabled %}
-
 {%- set date = salt['cmd.run']('date "+%FT%TZ"') %}
 
 kubernetes_namespace_create_{{ name }}:
@@ -286,13 +284,5 @@ kubernetes_namespace_create_{{ name }}:
     {%- if grains.get('noservices') %}
     - onlyif: /bin/false
     {%- endif %}
-
-{%- else %}
-
-kubernetes_namespace_delete_{{ name }}:
-  cmd.run:
-    - name: kubectl get ns -o=custom-columns=NAME:.metadata.name | grep -v NAME | grep "{{ name }}" > /dev/null && kubectl delete ns "{{ name }} || true"
-
-{%- endif %}
 
 {%- endfor %}
